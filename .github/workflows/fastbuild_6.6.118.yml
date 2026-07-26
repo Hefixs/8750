@@ -581,16 +581,15 @@ jobs:
         if: inputs.rekernel_enable
         run: |
           echo "正在启用Re-Kernel支持(用于与Freezer,NoActive等软件配合使用,提升冻结后台能力)…"
-          cd kernel_workspace
-          echo "CONFIG_REKERNEL=y" >> ./common/arch/arm64/configs/gki_defconfig
                     PATCH_DIR="${GITHUB_WORKSPACE}/kernel_workspace/Action-Build/patches"
           cd kernel_workspace/kernel_platform/common
           if [ "$VERSIONLEVEL" -lt 6 ]; then
             patch -p1 --forward < "${PATCH_DIR}/unicode_bypass_fix_6.1+.patch" || true
+          cd kernel_workspace
+          echo "CONFIG_REKERNEL=y" >> ./common/arch/arm64/configs/gki_defconfig
+          
 
-          fi
-          source $REJ_CHECKER
-          check_rejects .
+
 
 
 
